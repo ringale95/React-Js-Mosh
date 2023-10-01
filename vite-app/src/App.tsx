@@ -1,21 +1,13 @@
-import Alert from "./components/Alert";
 //import ListGroup from "./components/ListGroup";
 
+import Button from "./components/button";
+
 function App() {
-  // let items = ["New York", "San Francisco", "Tokyo", "London", "Paris"];
-  // //we can now use Message component just like regualar html elements
-  // const handleSelectItem = (item: String, index: number) => {
-  //   console.log("I am a changed function", item, index);
-  // };
   return (
     <div>
-      {/* <ListGroup
-        items={items}
-        heading="Cities"
-        onSelectItem={handleSelectItem}
-      /> */}
-
-      <Alert>Hello World</Alert>
+      <Button color="secondary" onClick={() => console.log("clicked")}>
+        My-Button
+      </Button>
     </div>
   );
 }
