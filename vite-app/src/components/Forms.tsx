@@ -1,16 +1,21 @@
 import { FieldValues, useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-interface FormData {
-  name: string;
-  age: number;
-}
+//using z we can define shape of schema//
+const schema = z.object({
+  name: z.string().min(3),
+  age: z.number().min(18),
+});
+
+type FormData = z.infer<typeof schema>;
 
 const Form = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>(); //destructure of form element
+  } = useForm<FormData>({ resolver: zodResolver(schema) }); //destructure of form element and useForm should have interface or type of form
 
   const onSubmit = (data: FieldValues) => console.log(data);
 
@@ -22,29 +27,27 @@ const Form = () => {
           Name
         </label>
         <input
-          {...register("name", { required: true, minLength: 3 })}
+          {...register("name")}
           id="name"
           type="text"
           className="form-control"
         />
-        {errors.name?.type == "required" && (
-          <p className="alert alert-warning">The name field is required</p>
-        )}
-        {errors.name?.type === "minLength" && (
-          <p className="alert alert-warning">
-            Name must be atleast 3 characters long
-          </p>
+        {errors.name && (
+          <p className="alert alert-warning">{errors.name.message}</p>
         )}
         <div className="mb-3">
           <label htmlFor="age" className="form-label">
             Age
           </label>
           <input
-            {...register("age")}
+            {...register("age", { valueAsNumber: true })}
             id="age"
             type="number"
             className="form-control"
           />
+          {errors.age && (
+            <p className="alert alert-warning">{errors.age.message}</p>
+          )}
         </div>
       </div>
       <button className="btn btn-primary">Submit</button>
