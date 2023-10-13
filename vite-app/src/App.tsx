@@ -1,11 +1,22 @@
 import { useState } from "react";
-import Expandable from "./components/Expandable";
-import Forms from "./components/Forms";
+import ProductList from "./components/ProductList";
 
 const App = () => {
+  const [category, setCategory] = useState("");
   return (
     <div>
-      <Forms />
+      <select
+        className="form-select"
+        onChange={(event) => {
+          setCategory(event.target.value);
+        }}
+      >
+        <option value=""></option>
+        <option value="Clothing">Clothing</option>
+        <option value="Household">Household</option>
+      </select>
+      <br />
+      <ProductList category={category} />
     </div>
   );
 };

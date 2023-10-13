@@ -1,5 +1,5 @@
 import { FieldValues, useForm } from "react-hook-form";
-import { z } from "zod";
+import { isValid, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 //using z we can define shape of schema//
@@ -50,7 +50,9 @@ const Form = () => {
           )}
         </div>
       </div>
-      <button className="btn btn-primary">Submit</button>
+      <button disabled={!isValid} className="btn btn-primary">
+        Submit
+      </button>
     </form>
   );
 };
